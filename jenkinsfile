@@ -19,7 +19,8 @@ pipeline {
         }
         
         stage("depoly") {
-            steps {
+           
+           steps {
                 echo 'depolying the applicaton...'
             }
          }
