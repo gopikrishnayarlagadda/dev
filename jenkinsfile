@@ -1,27 +1,30 @@
 pipeline {
-   
    agent any
-    
-    stages {
-       
+   parameters{
+        choice(name: 'VERSION', choice: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+        booleanparam(name: 'executeTests', defaultvalue: true, description: '')
+   }
+   stages {
        stage("build") {
-           
-           steps {
+            steps {
               echo 'building the application...'
-          }
+              
+            }
        }
-       
        stage("test") {
-           
+           when {
+               expression {
+                   params.executeTests
+               }
+           }   
            steps {
                echo 'testing the application...'
-           }
+            }
         }
-        
-        stage("depoly") {
-           
+        stage("deploy") {
            steps {
-                echo 'depolying the applicaton...'
+                echo 'deploying the applicaton...'
+                echo "deploying version ${params.VERSION}"
             }
          }
     }
